@@ -27,6 +27,7 @@ namespace RedStarter.Database.SeedData
                 {
                     new RoleEntity{Name = "User"},
                     new RoleEntity{Name = "Admin"},
+                    //new RoleEntity{Name = "SuperUser"}
                 };
 
                 foreach (var role in roles)

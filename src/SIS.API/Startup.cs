@@ -15,16 +15,20 @@ using Microsoft.IdentityModel.Tokens;
 using RedStarter.API.MappingProfiles;
 using RedStarter.Business.DataContract.Application.Interfaces;
 using RedStarter.Business.DataContract.Authorization.Interfaces;
+using RedStarter.Business.DataContract.Product;
 using RedStarter.Business.Managers.Application;
 using RedStarter.Business.Managers.Authorization;
+using RedStarter.Business.Product;
 using RedStarter.Database.Application;
 using RedStarter.Database.Authorization;
 using RedStarter.Database.Contexts;
 using RedStarter.Database.DataContract.Application;
 using RedStarter.Database.DataContract.Authorization.Interfaces;
+using RedStarter.Database.DataContract.Product;
 using RedStarter.Database.DataContract.Roles.Interfaces;
 using RedStarter.Database.Entities.People;
 using RedStarter.Database.Entities.Roles;
+using RedStarter.Database.Product;
 using RedStarter.Database.Roles;
 using RedStarter.Database.SeedData;
 using Swashbuckle.AspNetCore.Swagger;
@@ -95,6 +99,8 @@ namespace RedStarter.API
             {
                 mc.AddProfile(new MappingProfile());
                 mc.AddProfile(new ApplicationMappingProfile());
+                mc.AddProfile(new ProductMappingProfile()); 
+
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
@@ -107,6 +113,8 @@ namespace RedStarter.API
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
             services.AddScoped<IUserApplicationManager, UserApplicationManager>();
+            services.AddScoped<IProductManager, ProductManager>();
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             //======= Swagger =======
             services.AddSwaggerGen(c =>
