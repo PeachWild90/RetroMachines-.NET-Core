@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RedStarter.Database.Contexts;
 using RedStarter.Database.DataContract.Product;
 using RedStarter.Database.Entities.Product;
@@ -26,10 +27,22 @@ namespace RedStarter.Database.Product
 
             var entity = _mapper.Map<ProductEntity>(rao);
 
-            _context.ProductTableAccess.AddAsync(entity);
+            await _context.ProductTableAccess.AddAsync(entity);
 
             return await _context.SaveChangesAsync() == 1;
 
         }
+
+        public async Task<IEnumerable<ProductGetListItemRAO>> GetProducts()
+        {
+
+            var query = await _context.ProductTableAccess.ToArrayAsync();
+            var array = _mapper.Map<IEnumerable<ProductGetListItemRAO>>(query);
+
+            return array;
+
+        }
+
+       
     }
 }

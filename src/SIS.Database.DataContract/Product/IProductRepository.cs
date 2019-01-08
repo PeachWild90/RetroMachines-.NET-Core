@@ -8,5 +8,6 @@ namespace RedStarter.Database.DataContract.Product
     public interface IProductRepository
     {
         Task<bool> CreateProduct(ProductCreateRAO rao);
+        Task<IEnumerable<ProductGetListItemRAO>> GetProducts();
     }
 }

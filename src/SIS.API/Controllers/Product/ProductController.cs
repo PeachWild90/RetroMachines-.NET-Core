@@ -47,5 +47,23 @@ namespace RedStarter.API.Controllers.Product
             throw new Exception();
         }
 
+        [HttpGet]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> GetProducts()
+        {
+            if (!ModelState.IsValid) //want this to check 
+            {
+                return StatusCode(400);
+            }
+
+            var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var dto = await _manager.GetProducts();
+            var response = _mapper.Map<IEnumerable<ProductResponse>>(dto);
+
+           return Ok(response); //TODO : Handle exceptions
+
+        }
+
     }
 }

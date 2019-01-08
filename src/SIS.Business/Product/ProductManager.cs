@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RedStarter.Business.Product
 {
-    public class ProductManager : IProductManager //interface states that if you have a method inside of here you have to have an implementation
+    public class ProductManager : IProductManager //interface states that if you have a method inside of here you have to have an implementation. YOU HAVE TO HAVE ALL THE METHODS IN HERE!!!
     {
         private readonly IMapper _mapper;
         private readonly IProductRepository _repository;
@@ -28,5 +28,15 @@ namespace RedStarter.Business.Product
 
             throw new NotImplementedException(); //here is the actual implementation. It is what happens BETWEEN the curly braces
         }
+
+        public async Task<IEnumerable<ProductGetListItemDTO>> GetProducts()
+        {
+            var rao = await _repository.GetProducts();
+            var dto = _mapper.Map<IEnumerable<ProductGetListItemDTO>>(rao);
+
+            return dto;
+        }
+
+        
     }
 }

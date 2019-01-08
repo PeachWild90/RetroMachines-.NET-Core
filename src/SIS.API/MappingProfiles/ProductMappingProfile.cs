@@ -17,6 +17,10 @@ namespace RedStarter.API.MappingProfiles
             CreateMap<ProductCreateRequest, ProductCreateDTO>();
             CreateMap<ProductCreateDTO, ProductCreateRAO>();
             CreateMap<ProductCreateRAO, ProductEntity>();
+
+            CreateMap<ProductEntity, ProductGetListItemRAO>();
+            CreateMap<ProductGetListItemRAO, ProductGetListItemDTO>();
+            CreateMap<ProductGetListItemDTO, ProductResponse>();
         }
     }
 }

@@ -12,5 +12,6 @@ namespace RedStarter.Database.DataContract.Authorization.Interfaces
         Task<ReceivedExistingUserRAO> Login(QueryForExistingUserRAO queryRao);
         Task<bool> UserExists(string username);
         Task<ReceivedExistingUserRAO> GetUserById(int ownerId);
+        
     }
 }
