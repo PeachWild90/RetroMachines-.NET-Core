@@ -36,7 +36,6 @@ namespace RedStarter.API.Controllers.Product
             }
 
             var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value); //what this does: handy little tool to see who is associated with the incoming request. Takes token, goes into DB and checks it out
-
             var dto = _mapper.Map<ProductCreateDTO>(request);
             dto.DateCreated = DateTime.Now;
             dto.OwnerId = identityClaimNum;
@@ -57,7 +56,6 @@ namespace RedStarter.API.Controllers.Product
             }
 
             var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
             var dto = await _manager.GetProducts();
             var response = _mapper.Map<IEnumerable<ProductResponse>>(dto);
 
@@ -72,16 +70,15 @@ namespace RedStarter.API.Controllers.Product
                 return StatusCode(400);
             }
             var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
             var dto = await _manager.GetProductById(ProductEntityId);
             var response = _mapper.Map<IEnumerable<ProductResponse>>(dto);
 
             return Ok(response);
         }
 
-        [HttpGet]
+        [HttpPut("{id}")]
         [Authorize(Roles = "Admin, User")]
-        public async Task<IActionResult> ProductEdit(ProductEditRequest request)
+        public async Task<IActionResult> ProductEdit(int id, ProductEditRequest request)
         {
 
             if (!ModelState.IsValid)
@@ -90,7 +87,6 @@ namespace RedStarter.API.Controllers.Product
             }
 
             var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
             var dto = _mapper.Map<ProductEditDTO>(request);
 
             if (await _manager.ProductEdit(dto))

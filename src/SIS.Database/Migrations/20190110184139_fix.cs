@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RedStarter.Database.Migrations
 {
-    public partial class initial : Migration
+    public partial class fix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -122,6 +122,38 @@ namespace RedStarter.Database.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ExperienceTableAccess", x => x.ApplicationEntityId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductTableAccess",
+                columns: table => new
+                {
+                    ProductEntityId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Year = table.Column<int>(nullable: false),
+                    OwnerId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Type = table.Column<string>(nullable: false),
+                    Condition = table.Column<string>(nullable: false),
+                    DateCreated = table.Column<DateTimeOffset>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductTableAccess", x => x.ProductEntityId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WishlistTableAccess",
+                columns: table => new
+                {
+                    TransactionalId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    OwnerId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WishlistTableAccess", x => x.TransactionalId);
                 });
 
             migrationBuilder.CreateTable(
@@ -301,6 +333,12 @@ namespace RedStarter.Database.Migrations
 
             migrationBuilder.DropTable(
                 name: "ExperienceTableAccess");
+
+            migrationBuilder.DropTable(
+                name: "ProductTableAccess");
+
+            migrationBuilder.DropTable(
+                name: "WishlistTableAccess");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
