@@ -25,11 +25,11 @@ namespace RedStarter.API.Controllers.Product
         }
 
 
-       [HttpPost]
-       [Authorize(Roles = "Admin, User")] //the only peoeple who can add a product are people that are authorized. THey have to match the SeedRepository
-       public async Task<IActionResult> PostProduct(ProductCreateRequest request)
+        [HttpPost]
+        [Authorize(Roles = "Admin, User")] //the only peoeple who can add a product are people that are authorized. THey have to match the SeedRepository
+        public async Task<IActionResult> PostProduct(ProductCreateRequest request)
         {
-            
+
             if (!ModelState.IsValid) //want this to check 
             {
                 return StatusCode(400);
@@ -61,9 +61,62 @@ namespace RedStarter.API.Controllers.Product
             var dto = await _manager.GetProducts();
             var response = _mapper.Map<IEnumerable<ProductResponse>>(dto);
 
-           return Ok(response); //TODO : Handle exceptions
-
+            return Ok(response); //TODO : Handle exceptions
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProductById(int ProductEntityId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(400);
+            }
+            var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var dto = await _manager.GetProductById(ProductEntityId);
+            var response = _mapper.Map<IEnumerable<ProductResponse>>(dto);
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, User")]
+        public async Task<IActionResult> ProductEdit(ProductEditRequest request)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(400);
+            }
+
+            var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var dto = _mapper.Map<ProductEditDTO>(request);
+
+            if (await _manager.ProductEdit(dto))
+                return StatusCode(201);
+
+            throw new Exception();
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin, User")]
+        public async Task<IActionResult> ProductDelete(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(400);
+            }
+
+            if (await _manager.ProductDelete(id))
+                return StatusCode(217);
+
+            throw new Exception();
+            //var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //var dto = await _manager.ProductDelete(ProductEntityId);
+
+            //if (await _manager.ProductDelete())
+            //    return StatusCode(201);
+        }
     }
 }

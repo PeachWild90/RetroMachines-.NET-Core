@@ -9,5 +9,8 @@ namespace RedStarter.Database.DataContract.Product
     {
         Task<bool> CreateProduct(ProductCreateRAO rao);
         Task<IEnumerable<ProductGetListItemRAO>> GetProducts();
+        Task<bool> ProductEdit(ProductEditRAO rao);
+        Task<ProductGetListItemRAO> GetProductById(int id);
+        Task<bool> ProductDelete(int ProductEntityId);
     }
 }
