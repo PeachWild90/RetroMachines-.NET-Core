@@ -47,7 +47,7 @@ namespace RedStarter.API.Controllers.Wishlist
         }
 
         [HttpGet]
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public async Task<IActionResult> GetWishlistItems()
         {
             if (!ModelState.IsValid) //want this to check 
@@ -63,15 +63,15 @@ namespace RedStarter.API.Controllers.Wishlist
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetWishlistById(int ProductId)
+        public async Task<IActionResult> GetWishlistById(int id)
         {
             if (!ModelState.IsValid)
             {
                 return StatusCode(400);
             }
             var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var dto = await _manager.GetWishlistById(ProductId);
-            var response = _mapper.Map<IEnumerable<WishlistResponse>>(dto);
+            var dto = await _manager.GetWishlistById(id);
+            var response = _mapper.Map<WishlistResponse>(dto);
 
             return Ok(response);
         }

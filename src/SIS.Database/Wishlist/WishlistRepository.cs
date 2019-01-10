@@ -31,7 +31,7 @@ namespace RedStarter.Database.Wishlist
 
         public async Task<WishlistGetAllItemsRAO> GetWishlistById(int id)
         {
-            var query = await _context.WishlistTableAccess.SingleAsync(x => x.ProductId == id);
+            var query = await _context.WishlistTableAccess.SingleAsync(x => x.TransactionalId == id);
             var rao = _mapper.Map<WishlistGetAllItemsRAO>(query);
 
             return rao;
