@@ -77,7 +77,7 @@ namespace RedStarter.API.Controllers.Product
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin, User")]
+        
         public async Task<IActionResult> ProductEdit(int id, ProductEditRequest request)
         {
 
