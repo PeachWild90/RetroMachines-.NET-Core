@@ -26,7 +26,7 @@ namespace RedStarter.API.Controllers.Product
 
 
         [HttpPost]
-        [Authorize(Roles = "Admin, User")] //the only peoeple who can add a product are people that are authorized. THey have to match the SeedRepository
+         //the only peoeple who can add a product are people that are authorized. THey have to match the SeedRepository
         public async Task<IActionResult> PostProduct(ProductCreateRequest request)
         {
 
@@ -47,7 +47,6 @@ namespace RedStarter.API.Controllers.Product
         }
 
         [HttpGet]
-        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetProducts()
         {
             if (!ModelState.IsValid) //want this to check 
@@ -77,7 +76,6 @@ namespace RedStarter.API.Controllers.Product
         }
 
         [HttpPut("{id}")]
-        
         public async Task<IActionResult> ProductEdit(int id, ProductEditRequest request)
         {
 
@@ -96,7 +94,6 @@ namespace RedStarter.API.Controllers.Product
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> ProductDelete(int id)
         {
             if (!ModelState.IsValid)
