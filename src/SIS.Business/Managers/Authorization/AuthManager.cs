@@ -5,6 +5,8 @@ using RedStarter.Business.DataContract.Authorization.Interfaces;
 using RedStarter.Database.DataContract.Authorization.Interfaces;
 using RedStarter.Database.DataContract.Authorization.RAOs;
 using RedStarter.Database.DataContract.Roles.Interfaces;
+using RedStarter.Database.DataContract.Wishlist;
+using RedStarter.Database.Wishlist;
 using System;
 using System.Threading.Tasks;
 
@@ -16,13 +18,15 @@ namespace RedStarter.Business.Managers.Authorization
         private IAuthRepository _authRepository;
         private readonly IConfiguration _configuration;
         private readonly IRoleRepository _roleRepository;
+        private readonly IWishlistRepository _wishlistRepository;
 
-        public AuthManager(IMapper mapper, IAuthRepository authRepository, IConfiguration configuration, IRoleRepository roleRepository)
+        public AuthManager(IMapper mapper, IAuthRepository authRepository, IConfiguration configuration, IRoleRepository roleRepository, IWishlistRepository wishlistRepository)
         {
             _mapper = mapper;
             _authRepository = authRepository;
             _configuration = configuration;
             _roleRepository = roleRepository;
+            _wishlistRepository = wishlistRepository;
         }
 
         public async Task<ReceivedExistingUserDTO> RegisterUser(RegisterUserDTO userDTO)
@@ -35,10 +39,12 @@ namespace RedStarter.Business.Managers.Authorization
             {
                 if (await _roleRepository.AddUserToRole(returnedRAO, "User"))
                 {
-                    return _mapper.Map<ReceivedExistingUserDTO>(returnedRAO);
+                    var wishlistRAO = new WishlistCreateRAO();
+                    wishlistRAO.OwnerId = returnedRAO.Id;
+                    if (await _wishlistRepository.CreateWishlist(wishlistRAO))
+                        return _mapper.Map<ReceivedExistingUserDTO>(returnedRAO);
                 }
             }
-
             return null;
         }
 

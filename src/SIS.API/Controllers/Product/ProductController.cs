@@ -63,14 +63,14 @@ namespace RedStarter.API.Controllers.Product
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetProductById(int ProductEntityId)
+        public async Task<IActionResult> GetProductById(int id)
         {
             if (!ModelState.IsValid)
             {
                 return StatusCode(400);
             }
             var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var dto = await _manager.GetProductById(ProductEntityId);
+            var dto = await _manager.GetProductById(id);
             var response = _mapper.Map<IEnumerable<ProductResponse>>(dto);
 
             return Ok(response);
