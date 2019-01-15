@@ -16,9 +16,11 @@ using RedStarter.API.MappingProfiles;
 using RedStarter.Business.DataContract.Application.Interfaces;
 using RedStarter.Business.DataContract.Authorization.Interfaces;
 using RedStarter.Business.DataContract.Product;
+using RedStarter.Business.DataContract.Wishlist;
 using RedStarter.Business.Managers.Application;
 using RedStarter.Business.Managers.Authorization;
 using RedStarter.Business.Product;
+using RedStarter.Business.WIshlist;
 using RedStarter.Database.Application;
 using RedStarter.Database.Authorization;
 using RedStarter.Database.Contexts;
@@ -31,6 +33,7 @@ using RedStarter.Database.Entities.Roles;
 using RedStarter.Database.Product;
 using RedStarter.Database.Roles;
 using RedStarter.Database.SeedData;
+using RedStarter.Database.Wishlist;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Net;
 using System.Text;
@@ -99,7 +102,8 @@ namespace RedStarter.API
             {
                 mc.AddProfile(new MappingProfile());
                 mc.AddProfile(new ApplicationMappingProfile());
-                mc.AddProfile(new ProductMappingProfile()); 
+                mc.AddProfile(new ProductMappingProfile());
+                mc.AddProfile(new WishlistMappingProfile());
 
             });
 
@@ -115,6 +119,8 @@ namespace RedStarter.API
             services.AddScoped<IUserApplicationManager, UserApplicationManager>();
             services.AddScoped<IProductManager, ProductManager>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IWishlistManager, WishlistManager>();
+            services.AddScoped<IWishlistRepository, WishlistRepository>();
 
             //======= Swagger =======
             services.AddSwaggerGen(c =>

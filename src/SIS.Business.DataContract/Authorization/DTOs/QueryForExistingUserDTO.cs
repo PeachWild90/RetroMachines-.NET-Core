@@ -6,6 +6,7 @@ namespace RedStarter.Business.DataContract.Authorization.DTOs
 {
     public class QueryForExistingUserDTO
     {
+        public string Email { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
     }
