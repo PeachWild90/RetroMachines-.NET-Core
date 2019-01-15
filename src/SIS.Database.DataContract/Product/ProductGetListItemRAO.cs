@@ -12,5 +12,6 @@ namespace RedStarter.Database.DataContract.Product
         public string Type { get; set; }
         public string Condition { get; set; }
         public DateTimeOffset DateCreated { get; set; }
+        public int OwnerId { get; set; }
     }
 }
