@@ -12,5 +12,6 @@ namespace RedStarter.Database.DataContract.Product
         Task<bool> ProductEdit(ProductEditRAO rao);
         Task<ProductGetListItemRAO> GetProductById(int id);
         Task<bool> ProductDelete(int ProductEntityId);
+        string GetUserNameByOwnerId(int id);
     }
 }

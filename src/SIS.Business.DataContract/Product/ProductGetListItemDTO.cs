@@ -13,5 +13,8 @@ namespace RedStarter.Business.DataContract.Product
         public string Condition { get; set; }
         public DateTimeOffset DateCreated { get; set; }
         public int OwnerId { get; set; }
+        public string UserName { get; set; }
+
+        //TODO 2: Provide same property as in response object - name
     }
 }

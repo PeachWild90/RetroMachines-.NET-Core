@@ -5,6 +5,7 @@ using RedStarter.Database.DataContract.Product;
 using RedStarter.Database.Entities.Product;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -68,6 +69,11 @@ namespace RedStarter.Database.Product
              _context.ProductTableAccess.Remove(query);
 
             return await _context.SaveChangesAsync() == 1;
+        }
+
+        public string GetUserNameByOwnerId(int id)
+        {
+            return _context.Users.Single(x => x.Id == id).UserName;
         }
 
        

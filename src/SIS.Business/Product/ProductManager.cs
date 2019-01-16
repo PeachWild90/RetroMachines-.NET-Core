@@ -32,9 +32,19 @@ namespace RedStarter.Business.Product
         public async Task<IEnumerable<ProductGetListItemDTO>> GetProducts()
         {
             var rao = await _repository.GetProducts();
+
+            //TODO: 
+            //TODO: Get name by product 
+
             var dto = _mapper.Map<IEnumerable<ProductGetListItemDTO>>(rao);
 
             return dto;
+        }
+
+        public string GetUserNameByOwnerId(int id)
+        {
+             return _repository.GetUserNameByOwnerId(id);
+
         }
 
         public async Task<ProductGetListItemDTO> GetProductById(int id)
