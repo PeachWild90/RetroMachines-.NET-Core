@@ -21,11 +21,7 @@ namespace RedStarter.API.Controllers.Product
 
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return _manager.GetUserNameByOwnerId(id) ;
-        }
+
 
 
 

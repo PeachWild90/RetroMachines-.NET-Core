@@ -69,13 +69,6 @@ namespace RedStarter.Database.Product
              _context.ProductTableAccess.Remove(query);
 
             return await _context.SaveChangesAsync() == 1;
-        }
-
-        public string GetUserNameByOwnerId(int id)
-        {
-            return _context.Users.Single(x => x.Id == id).UserName;
-        }
-
-       
+        }       
     }
 }

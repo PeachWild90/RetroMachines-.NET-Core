@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RedStarter.Business.DataContract.Product;
+using RedStarter.Database.DataContract.Authorization.Interfaces;
 using RedStarter.Database.DataContract.Product;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,13 @@ namespace RedStarter.Business.Product
     {
         private readonly IMapper _mapper;
         private readonly IProductRepository _repository;
+        private readonly IAuthRepository _authRepository;
 
-        public ProductManager(IMapper mapper, IProductRepository repository)
+        public ProductManager(IMapper mapper, IProductRepository repository, IAuthRepository authRepository)
         {
             _mapper = mapper;
             _repository = repository;
+            _authRepository = authRepository;
         }
 
         public async Task<bool> CreateProduct(ProductCreateDTO dto) //this is a signature for a method. Return type, name, and parameters
@@ -31,27 +34,26 @@ namespace RedStarter.Business.Product
 
         public async Task<IEnumerable<ProductGetListItemDTO>> GetProducts()
         {
-            var rao = await _repository.GetProducts();
-
+            var raos = await _repository.GetProducts();
+            var dtos = _mapper.Map<IEnumerable<ProductGetListItemDTO>>(raos);
+            foreach (ProductGetListItemDTO dto in dtos)
+            {
+                dto.UserName = (await _authRepository.GetUserById(dto.OwnerId)).UserName;
+            }
             //TODO: 
             //TODO: Get name by product 
+            
 
-            var dto = _mapper.Map<IEnumerable<ProductGetListItemDTO>>(rao);
-
-            return dto;
-        }
-
-        public string GetUserNameByOwnerId(int id)
-        {
-             return _repository.GetUserNameByOwnerId(id);
-
+            return dtos;
         }
 
         public async Task<ProductGetListItemDTO> GetProductById(int id)
         {
             var query = await _repository.GetProductById(id);
             var dto = _mapper.Map<ProductGetListItemDTO>(query);
-
+            {
+                dto.UserName = (await _authRepository.GetUserById(dto.OwnerId)).UserName;
+            }
             return dto;
         }
 
