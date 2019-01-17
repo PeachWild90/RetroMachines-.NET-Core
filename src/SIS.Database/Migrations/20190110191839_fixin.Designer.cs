@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RedStarter.Database.Contexts;
 
 namespace RedStarter.Database.Migrations
 {
     [DbContext(typeof(SISContext))]
-    partial class SISContextModelSnapshot : ModelSnapshot
+    [Migration("20190110191839_fixin")]
+    partial class fixin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

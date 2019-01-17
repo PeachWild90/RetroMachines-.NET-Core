@@ -5,6 +5,7 @@ using RedStarter.Database.Entities.Application;
 using RedStarter.Database.Entities.People;
 using RedStarter.Database.Entities.Product;
 using RedStarter.Database.Entities.Roles;
+using RedStarter.Database.Entities.WIshlist;
 
 namespace RedStarter.Database.Contexts
 {
@@ -21,6 +22,7 @@ namespace RedStarter.Database.Contexts
         public SISContext(DbContextOptions<SISContext> options) 
             : base(options) { }
 
+        public DbSet<WishlistEntity> WishlistTableAccess { get; set; }
         public DbSet<ProductEntity> ProductTableAccess { get; set; }
         public DbSet<UserEntity> UserTableAccess { get; set; }
         public DbSet<ApplicationEntity> ApplicationTableAccess { get; set; }

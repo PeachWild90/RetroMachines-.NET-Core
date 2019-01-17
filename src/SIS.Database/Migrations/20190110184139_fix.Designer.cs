@@ -10,8 +10,8 @@ using RedStarter.Database.Contexts;
 namespace RedStarter.Database.Migrations
 {
     [DbContext(typeof(SISContext))]
-    [Migration("20190107170335_producttableadded")]
-    partial class producttableadded
+    [Migration("20190110184139_fix")]
+    partial class fix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -247,8 +247,12 @@ namespace RedStarter.Database.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
+                    b.Property<int>("OwnerId");
+
                     b.Property<string>("Type")
                         .IsRequired();
+
+                    b.Property<int>("Year");
 
                     b.HasKey("ProductEntityId");
 
@@ -291,6 +295,21 @@ namespace RedStarter.Database.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("RedStarter.Database.Entities.WIshlist.WishlistEntity", b =>
+                {
+                    b.Property<int>("TransactionalId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("OwnerId");
+
+                    b.Property<int>("ProductId");
+
+                    b.HasKey("TransactionalId");
+
+                    b.ToTable("WishlistTableAccess");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
