@@ -71,7 +71,7 @@ namespace RedStarter.API.Controllers.Product
             }
             var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var dto = await _manager.GetProductById(id);
-            var response = _mapper.Map<IEnumerable<ProductResponse>>(dto);
+            var response = _mapper.Map<ProductResponse>(dto);
 
             return Ok(response);
         }

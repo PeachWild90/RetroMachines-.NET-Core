@@ -30,9 +30,9 @@ namespace RedStarter.Business.WIshlist
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<WishlistGetAllItemsDTO>> GetWishlistItems()
+        public async Task<IEnumerable<WishlistGetAllItemsDTO>> GetWishlistItems(int userId)
         {
-            var rao = await _repository.GetWishlistItems();
+            var rao = await _repository.GetWishlistItems(userId);
             var dto = _mapper.Map<IEnumerable<WishlistGetAllItemsDTO>>(rao);
 
             return dto;
