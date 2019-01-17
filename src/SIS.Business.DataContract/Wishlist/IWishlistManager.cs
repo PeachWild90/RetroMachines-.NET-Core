@@ -8,7 +8,7 @@ namespace RedStarter.Business.DataContract.Wishlist
     public interface IWishlistManager
     {
         Task<bool> CreateWishlist(WishlistCreateDTO dto);
-        Task<IEnumerable<WishlistGetAllItemsDTO>> GetWishlistItems();
+        Task<IEnumerable<WishlistGetAllItemsDTO>> GetWishlistItems(int userId);
         Task<WishlistGetAllItemsDTO> GetWishlistById(int OwnerId); //FIX THIS
         Task<bool> WishlistEdit(WishlistEditDTO dto);
         Task<bool> WishlistDelete(int OwnerId);

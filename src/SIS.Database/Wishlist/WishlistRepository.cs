@@ -5,6 +5,7 @@ using RedStarter.Database.DataContract.Wishlist;
 using RedStarter.Database.Entities.WIshlist;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,12 +38,12 @@ namespace RedStarter.Database.Wishlist
             return rao;
         }
 
-        public async Task<IEnumerable<WishlistGetAllItemsRAO>> GetWishlistItems()
+        public async Task<IEnumerable<WishlistGetAllItemsRAO>> GetWishlistItems(int userId)
         {
-            var query = await _context.WishlistTableAccess.ToArrayAsync();
-            var array = _mapper.Map<IEnumerable<WishlistGetAllItemsRAO>>(query);
+            var query = await _context.WishlistTableAccess.Where(x => x.OwnerId == userId).ToArrayAsync();
+            var rao = _mapper.Map<IEnumerable<WishlistGetAllItemsRAO>>(query);
 
-            return array;
+            return rao;
         }
 
         public async Task<bool> WishlistDelete(int id)
