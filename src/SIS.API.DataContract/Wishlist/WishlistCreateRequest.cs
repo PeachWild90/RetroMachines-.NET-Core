@@ -6,7 +6,6 @@ namespace RedStarter.API.DataContract.Wishlist
 {
     public class WishlistCreateRequest
     {
-        public int OwnerId { get; set; }
         public int ProductId { get; set; }
     }
 }
