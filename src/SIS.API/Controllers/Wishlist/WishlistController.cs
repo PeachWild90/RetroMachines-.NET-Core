@@ -4,11 +4,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RedStarter.API.DataContract.Wishlist;
 using RedStarter.Business.DataContract.Product;
 using RedStarter.Business.DataContract.Wishlist;
+using RedStarter.Business.WIshlist;
 
 namespace RedStarter.API.Controllers.Wishlist
 {
@@ -48,34 +50,20 @@ namespace RedStarter.API.Controllers.Wishlist
 
         [HttpGet]
         //[Authorize(Roles = "User")]
-        public async Task<IActionResult> GetWishlistItems(int userId)
+        public async Task<IActionResult> GetWishlistItems()
         {
             if (!ModelState.IsValid) //want this to check 
             {
                 return StatusCode(400);
             }
 
-            var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var dto = await _manager.GetWishlistItems(userId);
-            var response = _mapper.Map<IEnumerable<WishlistResponse>>(dto);
+            var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value); //this gets ownerId
+            var dto = await _manager.GetWishlistItems(id); //executes the method
+            var response = _mapper.Map<IEnumerable<WishlistResponse>>(dto); //Enumerate the items in WishlistResponse. Send it to Biz layer as a dto
 
-            return Ok(response);
+            return Ok(response); //if everything's good, return the response 
         }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetWishlistById(int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(400);
-            }
-            var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var dto = await _manager.GetWishlistById(id);
-            var response = _mapper.Map<WishlistResponse>(dto);
-
-            return Ok(response);
-        }
-
+        
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> WishlistEdit(int id, WishlistEditRequest request)
@@ -108,6 +96,14 @@ namespace RedStarter.API.Controllers.Wishlist
                 return StatusCode(217);
 
             throw new Exception();
+        }
+
+        [HttpGet("/owner")]
+        public int GetOwner()
+        {
+            var ownerId = User.Identity.GetUserId();
+            return int.Parse(ownerId);
+
         }
     }
 }

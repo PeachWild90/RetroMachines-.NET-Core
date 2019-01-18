@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RedStarter.Business.DataContract.Wishlist;
+using RedStarter.Database.DataContract.Product;
 using RedStarter.Database.DataContract.Wishlist;
 using RedStarter.Database.Wishlist;
 using System;
@@ -13,11 +14,13 @@ namespace RedStarter.Business.WIshlist
     {
         private readonly IMapper _mapper;
         private readonly IWishlistRepository _repository;
+        private readonly IProductRepository _productRepository;
 
-        public WishlistManager(IMapper mapper, IWishlistRepository repository)
+        public WishlistManager(IMapper mapper, IWishlistRepository repository, IProductRepository productRepository)
         {
             _mapper = mapper;
             _repository = repository;
+            _productRepository = productRepository;
         }
 
         public async Task<bool> CreateWishlist(WishlistCreateDTO dto)
@@ -30,20 +33,22 @@ namespace RedStarter.Business.WIshlist
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<WishlistGetAllItemsDTO>> GetWishlistItems(int userId)
+        public async Task<IEnumerable<WishlistGetAllItemsDTO>> GetWishlistItems(int id)
         {
-            var rao = await _repository.GetWishlistItems(userId);
-            var dto = _mapper.Map<IEnumerable<WishlistGetAllItemsDTO>>(rao);
+            var wishlistRAO = await _repository.GetWishlistItems(id); //this goes into repository with the ownerId
+            
 
-            return dto;
-        }
+            var collection = new List<ProductGetListItemRAO>();
+            foreach (var singleWishListItem in wishlistRAO)
+            {
+                var productRAO = await _productRepository.GetProductById(singleWishListItem.ProductId);
+                collection.Add(productRAO);
+            }
 
-        public async Task<WishlistGetAllItemsDTO> GetWishlistById(int id)
-        {
-            var query = await _repository.GetWishlistById(id);
-            var dto = _mapper.Map<WishlistGetAllItemsDTO>(query);
+            var itemsToReturn = _mapper.Map<IEnumerable<WishlistGetAllItemsDTO>>(collection);
+            return itemsToReturn;
+            throw new Exception();
 
-            return dto;
         }
 
         public async Task<bool> WishlistEdit(WishlistEditDTO dto)

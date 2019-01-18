@@ -38,9 +38,9 @@ namespace RedStarter.Database.Wishlist
             return rao;
         }
 
-        public async Task<IEnumerable<WishlistGetAllItemsRAO>> GetWishlistItems(int userId)
+        public async Task<IEnumerable<WishlistGetAllItemsRAO>> GetWishlistItems(int id)
         {
-            var query = await _context.WishlistTableAccess.Where(x => x.OwnerId == userId).ToArrayAsync();
+            var query = await _context.WishlistTableAccess.Where(x => x.OwnerId == id).ToArrayAsync();
             var rao = _mapper.Map<IEnumerable<WishlistGetAllItemsRAO>>(query);
 
             return rao;

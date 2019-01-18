@@ -122,6 +122,7 @@ namespace RedStarter.API
             services.AddScoped<IWishlistManager, WishlistManager>();
             services.AddScoped<IWishlistRepository, WishlistRepository>();
 
+
             //======= Swagger =======
             services.AddSwaggerGen(c =>
             {
