@@ -39,13 +39,27 @@ namespace RedStarter.API.Controllers.Wishlist
 
             var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var dto = _mapper.Map<WishlistCreateDTO>(request);
-            //dto.ProductId = WHAT GOIES HERE?!?!
+            
             dto.OwnerId = identityClaimNum;
 
             if (await _manager.CreateWishlist(dto))
                 return StatusCode(201);
 
             throw new Exception();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetWishlistById(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(400);
+            }
+            var identityClaimNum = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var dto = await _manager.GetWishlistById(id);
+            var response = _mapper.Map<WishlistResponse>(dto);
+
+            return Ok(response);
         }
 
         [HttpGet]

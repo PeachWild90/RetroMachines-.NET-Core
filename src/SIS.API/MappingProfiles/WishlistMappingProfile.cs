@@ -19,8 +19,8 @@ namespace RedStarter.API.MappingProfiles
             CreateMap<WishlistCreateRAO, WishlistEntity>().ForMember(x => x.TransactionalId, opt => opt.Ignore());
 
             CreateMap<WishlistEntity, WishlistGetAllItemsRAO>();
-            CreateMap<WishlistGetAllItemsRAO, WishlistGetAllItemsDTO>();
-            CreateMap<WishlistGetAllItemsDTO, WishlistResponse>();
+            CreateMap<WishlistGetAllItemsRAO, WishlistItemsDTO>();
+            CreateMap<WishlistItemsDTO, WishlistResponse>();
 
             CreateMap<WishlistEditRequest, WishlistEditDTO>();
             CreateMap<WishlistEditDTO, WishlistEditRAO>();

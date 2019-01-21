@@ -46,7 +46,7 @@ namespace RedStarter.Database.Product
 
         public async Task<ProductGetListItemRAO> GetProductById(int id)
         {
-            var query = await _context.ProductTableAccess.SingleAsync(x => x.ProductEntityId == id);
+            var query = await _context.ProductTableAccess.FirstOrDefaultAsync(x => x.ProductId == id);
             var rao = _mapper.Map<ProductGetListItemRAO>(query);
 
             return rao;
@@ -54,7 +54,7 @@ namespace RedStarter.Database.Product
 
         public async Task<bool> ProductEdit(ProductEditRAO rao)
         {
-            var entity = await _context.ProductTableAccess.SingleAsync(x => x.ProductEntityId == rao.ProductEntityId);
+            var entity = await _context.ProductTableAccess.FirstOrDefaultAsync(x => x.ProductId == rao.ProductId);
             entity.Year = rao.Year;
             entity.Name = rao.Name;
             entity.Type = rao.Type;
@@ -65,7 +65,7 @@ namespace RedStarter.Database.Product
 
         public async Task<bool> ProductDelete(int id)
         {
-            var query = await _context.ProductTableAccess.SingleAsync(x => x.ProductEntityId == id);
+            var query = await _context.ProductTableAccess.FirstOrDefaultAsync(x => x.ProductId == id);
              _context.ProductTableAccess.Remove(query);
 
             return await _context.SaveChangesAsync() == 1;

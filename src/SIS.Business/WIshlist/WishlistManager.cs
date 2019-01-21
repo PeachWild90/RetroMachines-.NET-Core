@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RedStarter.Business.DataContract.Wishlist;
+using RedStarter.Database.DataContract.Authorization.Interfaces;
 using RedStarter.Database.DataContract.Product;
 using RedStarter.Database.DataContract.Wishlist;
 using RedStarter.Database.Wishlist;
@@ -15,12 +16,14 @@ namespace RedStarter.Business.WIshlist
         private readonly IMapper _mapper;
         private readonly IWishlistRepository _repository;
         private readonly IProductRepository _productRepository;
+        private readonly IAuthRepository _authRepository;
 
-        public WishlistManager(IMapper mapper, IWishlistRepository repository, IProductRepository productRepository)
+        public WishlistManager(IMapper mapper, IWishlistRepository repository, IProductRepository productRepository, IAuthRepository authRepository)
         {
             _mapper = mapper;
             _repository = repository;
             _productRepository = productRepository;
+            _authRepository = authRepository;
         }
 
         public async Task<bool> CreateWishlist(WishlistCreateDTO dto)
@@ -33,7 +36,7 @@ namespace RedStarter.Business.WIshlist
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<WishlistGetAllItemsDTO>> GetWishlistItems(int id)
+        public async Task<IEnumerable<WishlistItemsDTO>> GetWishlistItems(int id)
         {
             var wishlistRAO = await _repository.GetWishlistItems(id); //this goes into repository with the ownerId
             
@@ -45,10 +48,19 @@ namespace RedStarter.Business.WIshlist
                 collection.Add(productRAO);
             }
 
-            var itemsToReturn = _mapper.Map<IEnumerable<WishlistGetAllItemsDTO>>(collection);
+            var itemsToReturn = _mapper.Map<IEnumerable<WishlistItemsDTO>>(collection);
             return itemsToReturn;
             throw new Exception();
+        }
 
+        public async Task<WishlistItemDTO> GetWishlistById(int id)
+        {
+            var query = await _repository.GetWishlistById(id);
+            var dto = _mapper.Map<WishlistItemDTO>(query);
+        
+            dto.UserName = (await _authRepository.GetUserById(dto.OwnerId)).UserName;
+            
+            return dto;
         }
 
         public async Task<bool> WishlistEdit(WishlistEditDTO dto)

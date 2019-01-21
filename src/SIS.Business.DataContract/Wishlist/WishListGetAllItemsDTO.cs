@@ -4,10 +4,12 @@ using System.Text;
 
 namespace RedStarter.Business.DataContract.Wishlist
 {
-    public class WishlistGetAllItemsDTO
+    public class WishlistItemsDTO
     {
+        //public int ProductEntityId { get; set; }
         public int WishlistId { get; set; }
         public int OwnerId { get; set; }
         public int ProductId { get; set; }
+        public string UserName { get; set; }
     }
 }

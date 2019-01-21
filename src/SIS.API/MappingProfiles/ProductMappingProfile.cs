@@ -26,7 +26,7 @@ namespace RedStarter.API.MappingProfiles
             CreateMap<ProductEditRequest, ProductEditDTO>();
             CreateMap<ProductEditDTO, ProductEditRAO>();
 
-            CreateMap<ProductGetListItemRAO, WishlistGetAllItemsDTO>();
+            CreateMap<ProductGetListItemRAO, IEnumerable<WishlistItemsDTO>>();
         }
     }
 }

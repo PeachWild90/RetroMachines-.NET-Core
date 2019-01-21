@@ -6,6 +6,6 @@ namespace RedStarter.API.DataContract.Product
 {
     public class ProductDeleteRequest
     {
-        public int ProductEntityId { get; set; }
+        public int ProductId { get; set; }
     }
 }
