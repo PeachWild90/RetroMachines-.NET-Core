@@ -80,5 +80,14 @@ namespace RedStarter.Database.Authorization
 
             return user;
         }
+
+        public async Task<bool> AmIAnAdmin(int id)
+        {
+            var entity = await _context.UserRoles.FirstOrDefaultAsync(e => e.UserId == id);
+
+            var admin = entity.RoleId == 2;
+
+            return admin;
+        }
     }
 }
