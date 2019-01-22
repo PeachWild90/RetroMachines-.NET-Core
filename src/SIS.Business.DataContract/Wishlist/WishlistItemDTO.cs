@@ -12,5 +12,8 @@ namespace RedStarter.Business.DataContract.Wishlist
         public string Name { get; set; }
         public int Year { get; set; }
         public string UserName { get; set; }
+        public string Condition { get; set; }
+        public DateTimeOffset DateCreated { get; set; }
+        public int TransactionalId { get; set; }
     }
 }

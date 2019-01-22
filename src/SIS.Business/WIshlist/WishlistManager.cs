@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using RedStarter.API.DataContract.Product;
+using RedStarter.Business.DataContract.Product;
 using RedStarter.Business.DataContract.Wishlist;
 using RedStarter.Database.DataContract.Authorization.Interfaces;
 using RedStarter.Database.DataContract.Product;
@@ -49,6 +51,30 @@ namespace RedStarter.Business.WIshlist
             }
 
             var itemsToReturn = _mapper.Map<IEnumerable<WishlistItemsDTO>>(collection);
+
+            foreach (var dto in itemsToReturn)
+            {
+                dto.UserName = (await _authRepository.GetUserById(dto.OwnerId)).UserName;
+            }
+
+            var i = 0;
+            var j = 0;
+
+            foreach (var item in itemsToReturn)
+            {
+                foreach (var itemRAO in wishlistRAO)
+                {
+                    if (i == j)
+                    {
+                        item.TransactionalId = itemRAO.TransactionalId;
+                    }
+
+                    j++;
+                }
+                i++;
+                j = 0;
+            }
+
             return itemsToReturn;
             throw new Exception();
         }

@@ -50,7 +50,8 @@ namespace RedStarter.Database.Wishlist
 
         public async Task<bool> WishlistDelete(int id)
         {
-            var query = await _context.WishlistTableAccess.SingleAsync(x => x.TransactionalId == id); //TRANSACTIONALID
+           
+            var query = await _context.WishlistTableAccess.SingleAsync(x => x.TransactionalId == id); //TRANSACTIONALID //THIS PART AHHHH
             _context.WishlistTableAccess.Remove(query);
 
             return await _context.SaveChangesAsync() == 1;

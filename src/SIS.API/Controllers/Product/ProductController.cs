@@ -47,7 +47,7 @@ namespace RedStarter.API.Controllers.Product
         }
 
         [HttpGet]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> GetProducts()
         {
             if (!ModelState.IsValid) //want this to check 

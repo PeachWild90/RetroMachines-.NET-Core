@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RedStarter.API.DataContract.Product;
+using RedStarter.Business.DataContract.Product;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;

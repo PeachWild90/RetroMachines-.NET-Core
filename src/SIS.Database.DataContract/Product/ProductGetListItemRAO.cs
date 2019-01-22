@@ -13,7 +13,7 @@ namespace RedStarter.Database.DataContract.Product
         public string Condition { get; set; }
         public DateTimeOffset DateCreated { get; set; }
         public int OwnerId { get; set; }
-        public int WishlistId { get; set; }
+        // public int WishlistId { get; set; }
         //TODO: Get names
 
     }

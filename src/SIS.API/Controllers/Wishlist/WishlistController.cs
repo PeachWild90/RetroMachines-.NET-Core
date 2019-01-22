@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RedStarter.API.DataContract.Product;
 using RedStarter.API.DataContract.Wishlist;
 using RedStarter.Business.DataContract.Product;
 using RedStarter.Business.DataContract.Wishlist;
@@ -73,7 +74,7 @@ namespace RedStarter.API.Controllers.Wishlist
 
             var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value); //this gets ownerId
             var dto = await _manager.GetWishlistItems(id); //executes the method
-            var response = _mapper.Map<IEnumerable<WishlistResponse>>(dto); //Enumerate the items in WishlistResponse. Send it to Biz layer as a dto
+            var response = _mapper.Map<IEnumerable<WishlistGetAllItemsRequest>>(dto); //Enumerate the items in WishlistResponse. Send it to Biz layer as a dto
 
             return Ok(response); //if everything's good, return the response 
         }
