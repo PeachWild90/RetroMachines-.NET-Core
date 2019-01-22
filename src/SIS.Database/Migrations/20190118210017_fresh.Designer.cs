@@ -10,8 +10,8 @@ using RedStarter.Database.Contexts;
 namespace RedStarter.Database.Migrations
 {
     [DbContext(typeof(SISContext))]
-    [Migration("20190115165200_peachy")]
-    partial class peachy
+    [Migration("20190118210017_fresh")]
+    partial class fresh
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -235,7 +235,7 @@ namespace RedStarter.Database.Migrations
 
             modelBuilder.Entity("RedStarter.Database.Entities.Product.ProductEntity", b =>
                 {
-                    b.Property<int>("ProductEntityId")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -254,7 +254,7 @@ namespace RedStarter.Database.Migrations
 
                     b.Property<int>("Year");
 
-                    b.HasKey("ProductEntityId");
+                    b.HasKey("ProductId");
 
                     b.ToTable("ProductTableAccess");
                 });

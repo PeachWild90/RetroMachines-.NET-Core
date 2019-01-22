@@ -233,7 +233,7 @@ namespace RedStarter.Database.Migrations
 
             modelBuilder.Entity("RedStarter.Database.Entities.Product.ProductEntity", b =>
                 {
-                    b.Property<int>("ProductEntityId")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -252,7 +252,7 @@ namespace RedStarter.Database.Migrations
 
                     b.Property<int>("Year");
 
-                    b.HasKey("ProductEntityId");
+                    b.HasKey("ProductId");
 
                     b.ToTable("ProductTableAccess");
                 });

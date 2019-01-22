@@ -39,9 +39,6 @@ namespace RedStarter.Business.Managers.Authorization
             {
                 if (await _roleRepository.AddUserToRole(returnedRAO, "User"))
                 {
-                    var wishlistRAO = new WishlistCreateRAO();
-                    wishlistRAO.OwnerId = returnedRAO.Id;
-                    if (await _wishlistRepository.CreateWishlist(wishlistRAO))
                         return _mapper.Map<ReceivedExistingUserDTO>(returnedRAO);
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RedStarter.API.DataContract.Product;
 using RedStarter.Business.DataContract.Product;
+using RedStarter.Business.DataContract.Wishlist;
 using RedStarter.Database.DataContract.Product;
 using RedStarter.Database.Entities.Product;
 using System;
@@ -24,6 +25,8 @@ namespace RedStarter.API.MappingProfiles
 
             CreateMap<ProductEditRequest, ProductEditDTO>();
             CreateMap<ProductEditDTO, ProductEditRAO>();
+
+            CreateMap<ProductGetListItemRAO, IEnumerable<WishlistItemsDTO>>();
         }
     }
 }

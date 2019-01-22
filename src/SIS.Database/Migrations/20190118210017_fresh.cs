@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RedStarter.Database.Migrations
 {
-    public partial class fix : Migration
+    public partial class fresh : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -128,7 +128,7 @@ namespace RedStarter.Database.Migrations
                 name: "ProductTableAccess",
                 columns: table => new
                 {
-                    ProductEntityId = table.Column<int>(nullable: false)
+                    ProductId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Year = table.Column<int>(nullable: false),
                     OwnerId = table.Column<int>(nullable: false),
@@ -139,7 +139,7 @@ namespace RedStarter.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductTableAccess", x => x.ProductEntityId);
+                    table.PrimaryKey("PK_ProductTableAccess", x => x.ProductId);
                 });
 
             migrationBuilder.CreateTable(

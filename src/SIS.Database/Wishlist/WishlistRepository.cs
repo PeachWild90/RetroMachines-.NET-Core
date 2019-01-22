@@ -25,7 +25,7 @@ namespace RedStarter.Database.Wishlist
         public async Task<bool> CreateWishlist(WishlistCreateRAO rao)
         {
             var entity = _mapper.Map<WishlistEntity>(rao);
-            await _context.WishlistTableAccess.AddAsync(entity);
+            await _context.WishlistTableAccess.AddAsync(entity); //transactional ID created here
 
             return await _context.SaveChangesAsync() == 1;
         }
@@ -38,9 +38,11 @@ namespace RedStarter.Database.Wishlist
             return rao;
         }
 
-        public async Task<IEnumerable<WishlistGetAllItemsRAO>> GetWishlistItems(int userId)
+        public async Task<IEnumerable<WishlistGetAllItemsRAO>> GetWishlistItems(int id)
         {
-            var query = await _context.WishlistTableAccess.Where(x => x.OwnerId == userId).ToArrayAsync();
+            //if currentUser.wishlist is undefined, create wishlist for this user
+
+            var query = await _context.WishlistTableAccess.Where(x => x.OwnerId == id).ToArrayAsync();
             var rao = _mapper.Map<IEnumerable<WishlistGetAllItemsRAO>>(query);
 
             return rao;
@@ -48,7 +50,8 @@ namespace RedStarter.Database.Wishlist
 
         public async Task<bool> WishlistDelete(int id)
         {
-            var query = await _context.WishlistTableAccess.SingleAsync(x => x.TransactionalId == id); //TRANSACTIONALID
+           
+            var query = await _context.WishlistTableAccess.SingleAsync(x => x.TransactionalId == id); //TRANSACTIONALID //THIS PART AHHHH
             _context.WishlistTableAccess.Remove(query);
 
             return await _context.SaveChangesAsync() == 1;

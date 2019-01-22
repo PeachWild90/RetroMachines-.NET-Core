@@ -10,8 +10,8 @@ namespace RedStarter.Database.Wishlist
     {
         Task<bool> CreateWishlist(WishlistCreateRAO rao);
         Task<IEnumerable<WishlistGetAllItemsRAO>> GetWishlistItems(int userId);
-        Task<WishlistGetAllItemsRAO> GetWishlistById(int OwnerId); //FIX THIS
         Task<bool> WishlistEdit(WishlistEditRAO dto);
         Task<bool> WishlistDelete(int OwnerId);
+        Task<WishlistGetAllItemsRAO> GetWishlistById(int id);
     }
 }

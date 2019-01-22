@@ -9,7 +9,7 @@ namespace RedStarter.Database.Entities.Product
     public class ProductEntity
     {
         [Key]
-        public int ProductEntityId { get; set; }
+        public int ProductId { get; set; }
 
         [Required]
         public int Year { get; set; }
